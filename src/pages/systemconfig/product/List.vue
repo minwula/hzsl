@@ -14,7 +14,7 @@
       <el-table-column prop="description" label="描述" />
       <el-table-column prop="categoryId" label="所属产品" />
       <el-table-column v-slot="slot" label="操作">
-        <template >
+        <template>
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
           <a href="" @click.prevent="toUpdateHandler(slot.row)"> <i class="el-icon-edit" /></a>
         </template>
@@ -38,10 +38,10 @@
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="价格">
-          <el-input v-model="form.price" type="password" />
+          <el-input v-model="form.price" />
         </el-form-item>
         <el-form-item label="所属栏目">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="form.num" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.id"

@@ -6,11 +6,11 @@
     <!-- /按钮 -->
     <!-- 表格 -->
     <el-table :data="employee" border style="width:90%">
-      <el-table-column prop="id" label="员工编号"/>
-      <el-table-column prop="realname" label="员工姓名"/>
-      <el-table-column prop="IdCard" label="身份证"/>
-      <el-table-column prop="bankCard" label="银行卡"/>
-      <el-table-column prop="telephone" label="联系方式"/>
+      <el-table-column prop="id" label="员工编号" />
+      <el-table-column prop="realname" label="员工姓名" />
+      <el-table-column prop="IdCard" label="身份证" />
+      <el-table-column prop="bankCard" label="银行卡" />
+      <el-table-column prop="telephone" label="联系方式" />
       <el-table-column label="操作">
         <template v-slot="slot">
 
