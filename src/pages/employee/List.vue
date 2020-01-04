@@ -8,11 +8,11 @@
     <!-- 表格 -->
     <el-table :data="employee" border style="width:90%">
       <el-table-column type="selection" />
-      <el-table-column prop="id" label="员工编号"/>
-      <el-table-column prop="realname" label="员工姓名"/>
-      <el-table-column prop="IdCard" label="身份证"/>
-      <el-table-column prop="bankCard" label="银行卡"/>
-      <el-table-column prop="telephone" label="联系方式"/>
+      <el-table-column prop="id" label="员工编号" />
+      <el-table-column prop="realname" label="员工姓名" />
+      <el-table-column prop="IdCard" label="身份证" />
+      <el-table-column prop="bankCard" label="银行卡" />
+      <el-table-column prop="telephone" label="联系方式" />
       <el-table-column label="操作">
         <template v-slot="slot">
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
@@ -27,10 +27,10 @@
     <!-- 模态框 -->
     <el-dialog title="录入员工信息" :visible.sync="visible" width="40%">
       <el-form :model="form" label-width="90px">
-        <el-form-item label="员工姓名">  <el-input v-model="form.username"/>  </el-form-item>
-        <el-form-item label="员工身份证"> <el-input v-model="form.IdCard"/>   </el-form-item>
-        <el-form-item label="员工银行卡"> <el-input v-model="form.backCard"/> </el-form-item>
-        <el-form-item label="联系方式">  <el-input v-model="form.telephone"/> </el-form-item>
+        <el-form-item label="员工姓名">  <el-input v-model="form.username" />  </el-form-item>
+        <el-form-item label="员工身份证"> <el-input v-model="form.IdCard" />   </el-form-item>
+        <el-form-item label="员工银行卡"> <el-input v-model="form.backCard" /> </el-form-item>
+        <el-form-item label="联系方式">  <el-input v-model="form.telephone" /> </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button round size="small" @click="closeModalHandler">取 消</el-button>
