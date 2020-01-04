@@ -1,16 +1,18 @@
 <template>
   <div>
+    <h>员工管理</h>
     <!-- 按钮 -->
     <el-button round type="success" icon="el-icon-edit" size="small" @click="toAddHandler"> 添加 </el-button>
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
     <el-table :data="employee" border style="width:90%">
-      <el-table-column prop="id" label="员工编号" />
-      <el-table-column prop="realname" label="员工姓名" />
-      <el-table-column prop="IdCard" label="身份证" />
-      <el-table-column prop="bankCard" label="银行卡" />
-      <el-table-column prop="telephone" label="联系方式" />
+      <el-table-column type="selection" />
+      <el-table-column prop="id" label="员工编号"/>
+      <el-table-column prop="realname" label="员工姓名"/>
+      <el-table-column prop="IdCard" label="身份证"/>
+      <el-table-column prop="bankCard" label="银行卡"/>
+      <el-table-column prop="telephone" label="联系方式"/>
       <el-table-column label="操作">
         <template v-slot="slot">
 
