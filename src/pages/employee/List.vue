@@ -5,10 +5,11 @@
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="employee">
-      <el-table-column prop="id" label="编号"></el-table-column>
-      <el-table-column prop="realname" label="真实姓名"></el-table-column>
-      <el-table-column prop="username" label="用户名"></el-table-column>
+    <el-table :data="employee" border style="width:90%" >
+      <el-table-column prop="id" label="员工编号"></el-table-column>
+      <el-table-column prop="realname" label="员工姓名"></el-table-column>
+      <el-table-column prop="IdCard" label="身份证"></el-table-column>
+      <el-table-column prop="bankCard" label="银行卡"></el-table-column>
       <el-table-column prop="telephone" label="联系方式"></el-table-column>
       <el-table-column label="操作">
         <template v-slot="slot">
@@ -23,19 +24,16 @@
     <el-pagination layout="prev, pager, next" :total="50"></el-pagination>
     <!-- /分页结束 -->
     <!-- 模态框 -->
-    <el-dialog
-      title="录入员工信息"
-      :visible.sync="visible"
-      width="60%">
-      <el-form :model="form" label-width="80px">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username"></el-input>
+    <el-dialog title="录入员工信息"  :visible.sync="visible"  width="40%">
+      <el-form :model="form" label-width="90px">
+        <el-form-item label="员工姓名">
+              <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input type="password" v-model="form.passworm"></el-input>
+        <el-form-item label="员工身份证">
+          <el-input v-model="form.IdCard"></el-input>
         </el-form-item>
-           <el-form-item label="真实姓名">
-          <el-input v-model="form.realname"></el-input>
+           <el-form-item label="员工银行卡">
+          <el-input v-model="form.backCard"></el-input>
         </el-form-item>
           <el-form-item label="联系方式">
           <el-input v-model="form.telephone"></el-input>
@@ -59,16 +57,16 @@ export default
   // 用于存放网页中需要调用的方法
   methods:{
     loadData(){
- let url="http://localhost:6677/employee/findAll"
+ let url="http://localhost:6677/waiter/findAll"
     request.get(url).then((response)=>{
-      //将查询结果设置到customer中
+      //将查询结果设置到employee中
       this.employee = response.data;
     })
     },
     submitHandler(){
       //this.form对象---字符串--》后台
       //通过request与后台进行交互,需携带参数
-      let url="http://localhost:6677/employee/saveOrUpdate"
+      let url="http://localhost:6677/waiter/saveOrUpdate"
       request({
         url,
         method:"POST",
@@ -96,7 +94,7 @@ export default
         type: 'warning'
       }).then(() => {
         //调用后台接口，完成删除信息
-        let url = "http://localhost:6677/employee/deleteById?id="+id;
+        let url = "http://localhost:6677/waiter/deleteById?id="+id;
         request.get(url).then((response)=>{
           //刷新数据
             this.loadData();
@@ -129,9 +127,9 @@ export default
   data(){
     return {
       visible:false,
-      customer:[],
+      employee:[],
       form:{
-        type:"employee"
+        type:"waiter"
       }
     }
   },
