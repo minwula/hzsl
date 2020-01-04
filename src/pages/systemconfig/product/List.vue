@@ -4,17 +4,19 @@
     <el-button type="success" size="small" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button>
 
-    <el-table :data="products">
+    {{ delIds }}
+    <el-table :data="products" @selection-change="handleSelectionChange">
       <el-table-column type="selection" />
+
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="price" label="价格" />
       <el-table-column prop="description" label="描述" />
       <el-table-column prop="categoryId" label="所属产品" />
-      <el-table-column label="操作">
-        <template v-slot="slot">
-          <a href="" @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
-          <a href="" @click.prevent="toUpdateHandler(slot.row)">编辑</a>
+      <el-table-column v-slot="slot" label="操作">
+        <template>
+          <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
+          <a href="" @click.prevent="toUpdateHandler(slot.row)"> <i class="el-icon-edit" /></a>
         </template>
       </el-table-column>
     </el-table>
@@ -90,7 +92,9 @@ export default {
         //   gender: '男',
         //   tel: '99844566123'
         // }
-      ]
+      ],
+      delIds: [],
+      delarr: []
     }
   }, created() {
     this.loadData()
@@ -102,6 +106,19 @@ export default {
       request.get(url).then((response) => {
         this.products = response.data
       })
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
+      } else {
+        this.$refs.multipleTable.clearSelection()
+      }
+    },
+    // 多选删除！！！！！！！！！！！！！！！！！
+    handleSelectionChange(val) {
+      this.delIds = val
     },
     toAddHandler() {
       const url = 'http://localhost:6677/category/findAll'
@@ -131,8 +148,25 @@ export default {
         })
       })
     }, toDeleteAllHandler() {
-      this.title = '删除产品信息'
-      this.visible = true
+      // 删除所有选中项！！
+      this.delIds.forEach((object) => {
+        this.delarr.push(object.id)
+      })
+      const url = 'http://localhost:6677/product/batchDelete?ids=' + this.delarr
+      request({
+        url,
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: querystring.stringify(this.form)
+      }).then((response) => {
+        this.loadData()
+        this.$message({
+          type: 'success',
+          message: response.message
+        })
+      })
     }, submitHandler() {
       const url = 'http://localhost:6677/product/saveOrUpdate'
       request({
