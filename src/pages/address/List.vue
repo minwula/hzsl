@@ -6,7 +6,7 @@
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="comments">
+    <el-table :data="address">
       <el-table-column type="selection" />
       <el-table-column prop="id" label="用户编号" />
       <el-table-column prop="province" label="用户所在省" />
