@@ -38,10 +38,10 @@
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="价格">
-          <el-input v-model="form.price" type="password" />
+          <el-input v-model="form.price" />
         </el-form-item>
         <el-form-item label="所属栏目">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="form.num" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.id"
@@ -121,6 +121,9 @@ export default {
       this.delIds = val
     },
     toAddHandler() {
+      this.form = {
+        type: 'product'
+      }
       const url = 'http://localhost:6677/category/findAll'
       request.get(url).then((response) => {
         this.options = response.data
@@ -130,7 +133,8 @@ export default {
     },
     closeModalHandler() {
       this.visible = false
-    }, toUpdateHandler() {
+    }, toUpdateHandler(row) {
+      this.form = row
       this.visible = true
     }, toDeleteHandler(id) {
       this.$confirm('此操作将永久删除该行, 是否继续?', '提示', {

@@ -6,9 +6,9 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-     <div style="padding:2em">
+      <div style="padding:2em">
         <app-main />
-     </div>
+      </div>
     </div>
   </div>
 </template>
