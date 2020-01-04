@@ -55,8 +55,6 @@ export const constantRoutes = [
     }]
   },
 
- 
-
   {
     path: '/customer',
     component: Layout,
@@ -92,7 +90,7 @@ export const constantRoutes = [
         name: 'categoryList',
         component: () => import('@/pages/systemconfig/category/List'),
         meta: { title: '栏目管理', icon: 'user' }
-      },{
+      }, {
         path: 'product/List',
         name: 'productList',
         component: () => import('@/pages/systemconfig/product/List'),
@@ -100,7 +98,7 @@ export const constantRoutes = [
       }
     ]
   },
-  
+
   {
     path: '/order',
     component: Layout,
