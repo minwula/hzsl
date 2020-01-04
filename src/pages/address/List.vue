@@ -80,7 +80,7 @@ export default
     loadData() {
       const url = 'http://localhost:6677/address/findAll'
       request.get(url).then((response) => {
-      // 将查询结果设置到customer中
+      // 将查询结果设置到address中
         this.address = response.data
       })
     },

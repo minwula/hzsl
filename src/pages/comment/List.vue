@@ -37,9 +37,6 @@
         <el-form-item label="评论时间">
           <el-input v-model="form.commentTime" />
         </el-form-item>
-        <el-form-item label="订单号">
-          <el-input v-model="form.orderId" />
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button round size="small" @click="closeModalHandler">取 消</el-button>
@@ -62,9 +59,7 @@ export default
     return {
       visible: false,
       comments: [],
-      form: {
-        type: 'comment'
-      }
+      form: {}
     }
   },
   created() {
@@ -131,9 +126,7 @@ export default
       this.visible = false
     },
     toAddHandler() {
-      this.form = {
-        type: 'comment'
-      }
+      this.form = {}
       this.visible = true
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>服务员管理页面</h2>
+    <h1>服务员管理页面</h1>
     <!-- 按钮 -->
     <el-button round type="success" icon="el-icon-edit" size="small" @click="toAddHandler"> 添加 </el-button>
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
@@ -13,7 +13,6 @@
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="username" label="用户名字" />
       <el-table-column prop="realname" label="员工姓名" />
-      <el-table-column prop="type" label="工作性质" />
       <el-table-column prop="telephone" label=" 员工联系方式" />
       <el-table-column label="操作">
         <template v-slot="slot">
@@ -29,15 +28,14 @@
     <!-- /分页结束 -->
     <!-- 模态框 -->
     <el-dialog
-      title="录入地址信息"
+      title="录入员工信息"
       :visible.sync="visible"
-      width="50%"
+      width="60%"
     >
       <el-form :model="form" label-width="100px">
         <el-form-item label="编号" width="100px"><el-input v-model="form.id" /></el-form-item>
         <el-form-item label="用户姓名" width="100px"><el-input v-model="form.username" /></el-form-item>
         <el-form-item label="员工姓名" width="100px"><el-input v-model="form.realname" /> </el-form-item>
-        <el-form-item label="工作性质" width="100px"><el-input v-model="form.type" /> </el-form-item>
         <el-form-item label="员工联系方式" width="100px"><el-input v-model="form.telephone" /> </el-form-item>
           </el-form>
       <span slot="footer" class="dialog-footer">

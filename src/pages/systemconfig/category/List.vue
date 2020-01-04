@@ -1,6 +1,6 @@
 <template>
-<div>
-     <h2>栏目管理</h2>
+  <div>
+    <h2>栏目管理</h2>
     <el-button type="success" size="small" icon="el-icon-edit-outline" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" icon="el-icon-delete" round>批量删除</el-button>
     <el-table :data="categorys">
@@ -25,8 +25,8 @@
         label="操作"
       >
         <template v-slot="slot">
-        <a href="" @click.prevent="toDeleteHandler(slot.row.id)"><i class="el-icon-delete" /></a>
-        <a href="" @click.prevent="toUpdateHandler(slot.row)"><i class="el-icon-edit" /></a>
+          <a href="" @click.prevent="toDeleteHandler(slot.row.id)"><i class="el-icon-delete" /></a>
+          <a href="" @click.prevent="toUpdateHandler(slot.row)"><i class="el-icon-edit" /></a>
         </template>
       </el-table-column>
     </el-table>
@@ -39,9 +39,6 @@
       width="60%"
     >
       <el-form :v-model="form" label-width="80px">
-        <el-form-item label="编号">
-          <el-input v-model="form.id" />
-        </el-form-item>
         <el-form-item label="栏目名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -67,9 +64,7 @@ export default {
     return {
       visible: false,
       categorys: [],
-      form: {
-        type: 'categorys'
-      }
+      form: {}
     }
   },
   created() {
@@ -95,7 +90,7 @@ export default {
         },
         data: querystring.stringify(this.form)
 
-    }).then((response) => {
+      }).then((response) => {
         // 模态框关闭
         this.closeModalHandler()
         this.loadData()
@@ -105,7 +100,7 @@ export default {
         })
       })
     },
-     toDeleteHandler(id) {
+    toDeleteHandler(id) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -127,9 +122,7 @@ export default {
       this.visible = false
     },
     toAddHandler() {
-      this.form = {
-        type: 'category'
-      }
+      this.form = {}
       this.visible = true
     },
     toUpdateHandler(row) {
