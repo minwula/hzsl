@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h>员工管理</h>
     <!-- 按钮 -->
     <el-button round type="success" icon="el-icon-edit" size="small" @click="toAddHandler"> 添加 </el-button>
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
