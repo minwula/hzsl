@@ -6,7 +6,9 @@
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="address">
+    <el-table 
+    border
+    :data="address">
       <el-table-column type="selection" />
       <el-table-column prop="id" label="用户编号" />
       <el-table-column prop="province" label="用户所在省" />
@@ -33,14 +35,14 @@
       :visible.sync="visible"
       width="50%"
     >
-      <el-form :model="form" label-width="80px">
-        <el-form-item label="用户编号"><el-input v-model="form.id" /></el-form-item>
-        <el-form-item label="用户所在省"><el-input v-model="form.province" /></el-form-item>
-        <el-form-item label="用户所在市"><el-input v-model="form.city" /> </el-form-item>
-        <el-form-item label="用户所在区"><el-input v-model="form.area" /> </el-form-item>
-        <el-form-item label="用户地址"><el-input v-model="form.address" /> </el-form-item>
-        <el-form-item label="用户联系方式"><el-input v-model="form.telephone" /> </el-form-item>
-        <el-form-item label="员工编号"><el-input v-model="form.customerId" /> </el-form-item>
+      <el-form :model="form" label-width="100px">
+        <el-form-item label="用户编号" width="100px"><el-input v-model="form.id" /></el-form-item>
+        <el-form-item label="用户所在省" width="100px"><el-input v-model="form.province" /></el-form-item>
+        <el-form-item label="用户所在市" width="100px"><el-input v-model="form.city" /> </el-form-item>
+        <el-form-item label="用户所在区" width="100px"><el-input v-model="form.area" /> </el-form-item>
+        <el-form-item label="用户地址" width="100px"><el-input v-model="form.address" /> </el-form-item>
+        <el-form-item label="用户联系方式" width="100px"><el-input v-model="form.telephone" /> </el-form-item>
+        <el-form-item label="员工编号" width="100px"><el-input v-model="form.customerId" /> </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button round size="small" @click="closeModalHandler">取 消</el-button>

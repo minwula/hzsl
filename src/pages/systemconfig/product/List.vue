@@ -3,8 +3,6 @@
     <h2>产品管理</h2>
     <el-button type="success" size="small" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button>
-
-    {{ delIds }}
     <el-table :data="products" @selection-change="handleSelectionChange">
       <el-table-column type="selection" />
 
@@ -46,6 +44,7 @@
               v-for="item in options"
               :key="item.id"
               :label="item.name"
+              :value="item.name"
             />
           </el-select>
         </el-form-item>
@@ -76,7 +75,6 @@ export default {
       visible: false,
       title: '',
       form: {
-        type: 'product'
       },
       options: [],
       products: [
@@ -122,7 +120,6 @@ export default {
     },
     toAddHandler() {
       this.form = {
-        type: 'product'
       }
       const url = 'http://localhost:6677/category/findAll'
       request.get(url).then((response) => {
