@@ -14,7 +14,7 @@
       <el-table-column prop="description" label="描述" />
       <el-table-column prop="categoryId" label="所属产品" />
       <el-table-column v-slot="slot" label="操作">
-        <template>
+        <template >
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
           <a href="" @click.prevent="toUpdateHandler(slot.row)"> <i class="el-icon-edit" /></a>
         </template>
@@ -121,6 +121,9 @@ export default {
       this.delIds = val
     },
     toAddHandler() {
+      this.form = {
+        type: 'product'
+      }
       const url = 'http://localhost:6677/category/findAll'
       request.get(url).then((response) => {
         this.options = response.data
@@ -130,7 +133,8 @@ export default {
     },
     closeModalHandler() {
       this.visible = false
-    }, toUpdateHandler() {
+    }, toUpdateHandler(row) {
+      this.form = row
       this.visible = true
     }, toDeleteHandler(id) {
       this.$confirm('此操作将永久删除该行, 是否继续?', '提示', {
