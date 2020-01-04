@@ -5,6 +5,7 @@
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button>
 
     <el-table :data="products">
+      <el-table-column type="selection" />
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="price" label="价格" />
