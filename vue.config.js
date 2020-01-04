@@ -5,7 +5,8 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-家政服务云平台' // page title
+const name = defaultSettings.title || '家政预约平台' 
+// page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
