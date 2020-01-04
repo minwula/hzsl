@@ -3,8 +3,6 @@
     <h2>产品管理</h2>
     <el-button type="success" size="small" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button>
-
-    {{ delIds }}
     <el-table :data="products" @selection-change="handleSelectionChange">
       <el-table-column type="selection" />
 
