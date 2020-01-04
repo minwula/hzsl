@@ -6,9 +6,10 @@
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table 
-    border
-    :data="employee">
+    <el-table
+      border
+      :data="employee"
+    >
       <el-table-column type="selection" />
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="username" label="用户名字" />
@@ -37,7 +38,7 @@
         <el-form-item label="用户姓名" width="100px"><el-input v-model="form.username" /></el-form-item>
         <el-form-item label="员工姓名" width="100px"><el-input v-model="form.realname" /> </el-form-item>
         <el-form-item label="员工联系方式" width="100px"><el-input v-model="form.telephone" /> </el-form-item>
-          </el-form>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button round size="small" @click="closeModalHandler">取 消</el-button>
         <el-button round size="small" type="primary" @click="submitHandler">确 定</el-button>

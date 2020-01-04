@@ -4,8 +4,7 @@
     <!-- <el-button type="success" size="small" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button> -->
 
-    <!-- {{ activeName }}
-    {{ orders }}
+    <!-- {{ orders.list }}
     {{ showList }} -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="所有订单" name="first">所有订单</el-tab-pane>
@@ -20,7 +19,7 @@
       <!-- <el-table-column type="selection" /> -->
 
       <el-table-column prop="id" label="编号" />
-      <el-table-column prop="ordertime" label="订单日期" />
+      <el-table-column prop="orderTime" label="订单日期" />
       <el-table-column prop="total" label="总价" />
       <el-table-column prop="status" label="状态" />
       <el-table-column prop="costomerId" label="顾客id" />
@@ -33,7 +32,8 @@
     <!-- 分页 -->
     <el-pagination
       layout="prev, pager, next"
-      :total="50"
+      :total="orders.total"
+      @current-change="pageChangeHandler"
     />
 
     <el-dialog
@@ -96,7 +96,7 @@
 
 <script>
 import request from '@/utils/request'
-// import querystring from 'querystring'
+import querystring from 'querystring'
 export default {
   // data用于存放要向网页中存放的数据
   data() {
@@ -108,62 +108,78 @@ export default {
       //     type: 'product'
       //   },
       //   options: [],
-      orders: [],
-      showList: []
+      orders: {},
+      showList: [],
+      params: {
+        page: 0,
+        pageSize: 10
+      }
     }
   }, created() {
     console.log('Created')
-    this.methods.loadData()
+    this.handleClick()
   },
   // 存放网页中需要调用的方法
   methods: {
     handleClick() {
       switch (this.activeName) {
         case 'first':
-          this.loadData('')
+          this.loadNav('')
           console.log('InSwitch')
           break
         case 'second':
-          this.loadData('待支付')
+          this.loadNav('待支付')
           console.log('InSwitch')
           break
         case 'third':
           console.log('InSwitch')
-          this.loadData('待派单')
+          this.loadNav('待派单')
           break
         case 'fourth':
           console.log('InSwitch')
-          this.loadData('待接单')
+          this.loadNav('待接单')
           break
         case 'fifth':
           console.log('InSwitch')
-          this.loadData('待服务')
+          this.loadNav('待服务')
           break
         case 'sixth':
           console.log('InSwitch')
-          this.loadData('待确认')
+          this.loadNav('待确认')
           break
         case 'seventh':
           console.log('InSwitch')
-          this.loadData('已完成')
+          this.loadNav('已完成')
           break
       }
     },
-    loadData(status) {
-      const url = 'http://localhost:6677/order/findAll'
-      request.get(url).then((response) => {
+    loadData() {
+      const url = 'http://localhost:6677/order/queryPage'
+      request({
+        url,
+        method: 'post',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+        data: querystring.stringify(this.params)
+      }).then((response) => {
         this.orders = response.data
+        this.showList = this.orders.list
       })
-      if (status === '') {
-        this.showList = this.orders
-        return
+    }, loadNav(statu) {
+      if (statu === '') {
+        this.loadData()
       }
       this.showList = []
-      this.orders.forEach((toShow) => {
-        if (toShow.status === status) {
+      this.orders.list.forEach((toShow) => {
+        if (toShow.status === statu) {
           this.showList.push(toShow)
         }
       })
+    },
+    pageChangeHandler(page) {
+      this.params.page = page - 1
+      this.loadData('')
     },
     // toggleSelection(rows) {
     //   if (rows) {
