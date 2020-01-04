@@ -77,31 +77,63 @@ export const constantRoutes = [
         path: 'List',
         name: 'employeeList',
         component: () => import('@/pages/employee/List'),
-        meta: { title: '顾客管理', icon: 'user' }
+        meta: { title: '员工管理', icon: 'user' }
       }
     ]
   },
   {
-    path: '/category',
+
+    path: '/systemconfig',
     component: Layout,
+    meta: { title: '系统配置', icon: 'example' },
     children: [
       {
-        path: 'List',
+        path: 'catogory/List',
         name: 'categoryList',
-        component: () => import('@/pages/category/List'),
+        component: () => import('@/pages/systemconfig/category/List'),
         meta: { title: '栏目管理', icon: 'user' }
+      },{
+        path: 'product/List',
+        name: 'productList',
+        component: () => import('@/pages/systemconfig/product/List'),
+        meta: { title: '产品管理', icon: 'user' }
       }
     ]
   },
+  
   {
-    path: '/product',
+    path: '/order',
     component: Layout,
     children: [
       {
         path: 'List',
-        name: 'productList',
-        component: () => import('@/pages/product/List'),
-        meta: { title: '产品管理', icon: 'user' }
+        name: 'orderList',
+        component: () => import('@/pages/order/List'),
+        meta: { title: '订单管理', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/comment',
+    component: Layout,
+    children: [
+      {
+        path: 'List',
+        name: 'commentList',
+        component: () => import('@/pages/comment/List'),
+        meta: { title: '评论管理', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/address',
+    component: Layout,
+    children: [
+      {
+        path: 'List',
+        name: 'addressList',
+        component: () => import('@/pages/address/List'),
+        meta: { title: '地址管理', icon: 'user' }
       }
     ]
   },
