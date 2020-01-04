@@ -6,6 +6,7 @@
     <!-- /按钮 -->
     <!-- 表格 -->
     <el-table :data="employee" border style="width:90%">
+      <el-table-column type="selection" />
       <el-table-column prop="id" label="员工编号"/>
       <el-table-column prop="realname" label="员工姓名"/>
       <el-table-column prop="IdCard" label="身份证"/>
