@@ -22,10 +22,10 @@
       <el-table-column prop="orderTime" label="订单日期" />
       <el-table-column prop="total" label="总价" />
       <el-table-column prop="status" label="状态" />
-      <el-table-column prop="costomerId" label="顾客id" />
+      <el-table-column prop="customerId" label="顾客id" />
       <el-table-column v-slot="slot" label="操作">
         <template>
-          <a href="" @click.prevent="toShowHandler(slot.row.id)"> <i class="el-icon-info" /></a>
+          <a href="" @click.prevent="toShowHandler(slot.row)"> <i class="el-icon-info" /></a>
         </template>
       </el-table-column>
     </el-table>
@@ -41,14 +41,16 @@
       :visible.sync="visible"
       width="60%"
     >
-      <span>编号 { orders.id } <br>
-        订单日期"orderTime": 1572248274468,
-        总价"total": 93,
-        状态"status": "已完成",
-        "remark": null,
-        "customerId": 26,
-        "waiterId": 29,
-        "addressId": 2228</span>
+
+      编号 :  {{ shown.id }} <br>
+      下单时间 :  {{ shown.orderTime }} <br>
+      总价 :  {{ shown.total }} <br>
+      状态 :  {{ shown.status }} <br>
+      标记 :  {{ shown.remark }} <br>
+      顾客id :  {{ shown.customerId }} <br>
+      员工id :  {{ shown.waiterId }} <br>
+      地址id :  {{ shown.addressId }} <br>
+
       <span slot="footer" class="dialog-footer">
         <!-- <el-button size="small" @click="closeModalHandler">取 消</el-button> -->
         <el-button type="primary" size="small" @click="closeModalHandler">确 定</el-button>
@@ -110,6 +112,7 @@ export default {
       //   options: [],
       orders: {},
       showList: [],
+      shown: [],
       params: {
         page: 0,
         pageSize: 10
@@ -210,7 +213,8 @@ export default {
     }, toUpdateHandler(row) {
       this.form = row
       this.visible = true
-    }, toShowHandler(id) {
+    }, toShowHandler(row) {
+      this.shown = row
       this.visible = true
     //   this.$confirm('此操作将永久删除该行, 是否继续?', '提示', {
     //     confirmButtonText: '确定',
