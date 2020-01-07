@@ -6,6 +6,7 @@
 
     <!-- {{ orders.list }}
     {{ showList }} -->
+
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="所有订单" name="first">所有订单</el-tab-pane>
       <el-tab-pane label="待支付" name="second">待支付</el-tab-pane>
@@ -26,7 +27,8 @@
       <el-table-column v-slot="slot" label="操作">
         <template>
           <a href="" @click.prevent="toShowHandler(slot.row)"> <i class="el-icon-info" /></a>
-          <a v-if="orders.status === '待派单'" href="" @click.prevent="toSendHandler(slot.row)"> <i class="el-icon-info" /></a>
+          <a v-if="slot.row.status === '待派单'" href="" @click.prevent="toSendHandler(slot.row)"> <i class="el-icon-edit" /></a>
+
         </template>
       </el-table-column>
     </el-table>
@@ -65,12 +67,22 @@
     >
 
       <div>
-        <p>订单编号： {{ form.id }}</p>
-        <p>订单总价： {{ form.total }}</p>
-        <p>下单时间： {{ form.orderTime }}</p>
-        <p>订单编号： {{ form.id }}</p>
+        <p>订单编号： {{ shown.id }}</p>
+        <p>订单总价： {{ shown.total }}</p>
+        <p>下单时间： {{ shown.orderTime }}</p>
+        <p>下单用户编号： {{ shown.customerId }}</p>
+        <!-- {{ shown }} -->
+        指定派单人员: <br>
+        <template>
+          <el-radio-group v-for="ele in employees" :key="ele.key" v-model="employees.id" @change="toBuildOrderHandler(ele.id)">
+            <el-radio :label="ele.realname" style="padding:1em" />
+          </el-radio-group>
 
-      </div>
+        </template></div>
+      <span slot="footer" class="dialog-footer">
+        <!-- <el-button size="small" @click="closeModalHandler">取 消</el-button> -->
+        <el-button type="primary" size="small" @click="toSendOrderHandler">确 定</el-button>
+      </span>
     </el-dialog>
     <!--   {{ form }}
       <el-form :model="form" label-width="80px">
@@ -118,17 +130,18 @@ export default {
       visible: false,
       visibleToSend: false,
       title: '',
-      //   form: {
-      //     type: 'product'
-      //   },
+      form: {
+      },
       //   options: [],
       orders: [],
-      shown: [],
+      shown: [
+      ],
       params: {
         page: 0,
         pageSize: 10,
         status: null
-      }
+      },
+      sendUrl: ''
     }
   }, created() {
     console.log('Created')
@@ -136,11 +149,31 @@ export default {
   },
   // 存放网页中需要调用的方法
   methods: {
-    toSendHandler() {
+    toBuildOrderHandler(builder) {
+      console.log('............订单中派单员信息' + builder + this.shown.id)
+      this.sendUrl = 'http://localhost:6677/order/sendOrder?waiterId=' + builder + '&orderId=' + this.shown.id
+    },
+    toSendOrderHandler() {
+      console.log('')
+      request.get(this.sendUrl).then((response) => {
+        this.$message({
+          type: 'success',
+          message: response.message
+        })
+      })
+    },
+    toSendHandler(row) {
+      this.title = '派送订单'
       this.visibleToSend = true
       const url = 'http://localhost:6677/waiter/findAll'
       request.get(url).then((response) => {
         this.employees = response.data
+      })
+      this.shown = row
+      this.employees.forEach(element => {
+        if (row.customerId === element.id) {
+          this.shown.customerName = element.name
+        }
       })
     },
     handleClick() {
@@ -238,11 +271,15 @@ export default {
     // },
     closeModalHandler() {
       this.visible = false
-    }, toUpdateHandler(row) {
-      this.form = row
-      this.visible = true
-    }, toShowHandler(row) {
+    },
+    // toUpdateHandler(row) {
+    //   this.form = row
+    //   this.visible = true
+    // }
+    // ,
+    toShowHandler(row) {
       this.shown = row
+      this.title = '订单详情'
       this.visible = true
     //   this.$confirm('此操作将永久删除该行, 是否继续?', '提示', {
     //     confirmButtonText: '确定',
