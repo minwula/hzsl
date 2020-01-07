@@ -161,6 +161,7 @@ export default {
           message: response.message
         })
       })
+      this.visibleToSend = false
     },
     toSendHandler(row) {
       this.title = '派送订单'
