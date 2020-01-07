@@ -9,8 +9,10 @@
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="price" label="价格" />
+      <el-table-column prop="photo" label="照片" />
       <el-table-column prop="description" label="描述" />
       <el-table-column prop="categoryId" label="所属产品" />
+
       <el-table-column v-slot="slot" label="操作">
         <template>
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
@@ -52,11 +54,12 @@
           <el-input v-model="form.description" />
         </el-form-item>
         <el-form-item label="产品主图">
+          <!-- :on-preview="handlePreview"
+            :on-remove="handleRemove" -->
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
+            action="https://134.175.154.93:6677/file/upload"
+            :on-success="onsuccessUpLoadHandler"
             :file-list="fileList"
             list-type="picture"
           >
@@ -104,11 +107,6 @@ export default {
       delIds: [],
       delarr: [],
       fileList: [
-        { name: 'food.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' },
-        { name: 'food2.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }
       ]
     }
   }, created() {
@@ -121,6 +119,11 @@ export default {
       request.get(url).then((response) => {
         this.products = response.data
       })
+    },
+    onsuccessUpLoadHandler(response) {
+      const photo = 'https://134.175.154.93:8888/group1/'
+      console.log('上传图片返回信息' + response)
+      this.form.photo = photo
     },
     toggleSelection(rows) {
       if (rows) {
@@ -136,6 +139,7 @@ export default {
       this.delIds = val
     },
     toAddHandler() {
+      this.fileList = []
       this.form = {
       }
       const url = 'http://localhost:6677/category/findAll'

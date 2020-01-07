@@ -15,7 +15,7 @@
       <el-tab-pane label="待确认" name="sixth">待确认</el-tab-pane>
       <el-tab-pane label="已完成" name="seventh">已完成</el-tab-pane>
     </el-tabs>
-    <el-table :data="showList">
+    <el-table :data="orders">
       <!-- <el-table-column type="selection" /> -->
 
       <el-table-column prop="id" label="编号" />
@@ -26,6 +26,7 @@
       <el-table-column v-slot="slot" label="操作">
         <template>
           <a href="" @click.prevent="toShowHandler(slot.row)"> <i class="el-icon-info" /></a>
+          <a v-if="orders.status === '待派单'" href="" @click.prevent="toSendHandler(slot.row)"> <i class="el-icon-info" /></a>
         </template>
       </el-table-column>
     </el-table>
@@ -57,12 +58,21 @@
       </span>
     </el-dialog>
     <!-- 提示框 :before-close="handleClose"-->
-    <!-- <el-dialog
+    <el-dialog
       :title="title"
-      :visible.sync="visible"
+      :visible.sync="visibleToSend"
       width="60%"
     >
-      {{ form }}
+
+      <div>
+        <p>订单编号： {{ form.id }}</p>
+        <p>订单总价： {{ form.total }}</p>
+        <p>下单时间： {{ form.orderTime }}</p>
+        <p>订单编号： {{ form.id }}</p>
+
+      </div>
+    </el-dialog>
+    <!--   {{ form }}
       <el-form :model="form" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="form.name" />
@@ -103,56 +113,73 @@ export default {
   // data用于存放要向网页中存放的数据
   data() {
     return {
+      employees: [],
       activeName: 'first',
       visible: false,
+      visibleToSend: false,
       title: '',
       //   form: {
       //     type: 'product'
       //   },
       //   options: [],
-      orders: {},
-      showList: [],
+      orders: [],
       shown: [],
       params: {
         page: 0,
-        pageSize: 10
+        pageSize: 10,
+        status: null
       }
     }
   }, created() {
     console.log('Created')
-    this.handleClick()
+    this.loadData()
   },
   // 存放网页中需要调用的方法
   methods: {
+    toSendHandler() {
+      this.visibleToSend = true
+      const url = 'http://localhost:6677/waiter/findAll'
+      request.get(url).then((response) => {
+        this.employees = response.data
+      })
+    },
     handleClick() {
       switch (this.activeName) {
         case 'first':
-          this.loadNav('')
+          this.params.status = null
+          this.loadData()
           console.log('InSwitch')
           break
         case 'second':
-          this.loadNav('待支付')
+          this.params.status = '待支付'
+
+          this.loadData()
           console.log('InSwitch')
           break
         case 'third':
+          this.params.status = '待派单'
           console.log('InSwitch')
-          this.loadNav('待派单')
+          this.loadData()
           break
         case 'fourth':
+          this.params.status = '待接单'
           console.log('InSwitch')
-          this.loadNav('待接单')
+          this.loadData()
           break
         case 'fifth':
+          this.params.status = '待服务'
           console.log('InSwitch')
-          this.loadNav('待服务')
+          this.loadData()
           break
         case 'sixth':
+          this.params.status = '待确认'
           console.log('InSwitch')
-          this.loadNav('待确认')
+          this.loadData()
           break
         case 'seventh':
+          this.params.status = '已完成'
           console.log('InSwitch')
-          this.loadNav('已完成')
+          this.loadData()
           break
       }
     },
@@ -166,23 +193,24 @@ export default {
         },
         data: querystring.stringify(this.params)
       }).then((response) => {
-        this.orders = response.data
-        this.showList = this.orders.list
-      })
-    }, loadNav(statu) {
-      if (statu === '') {
-        this.loadData()
-      }
-      this.showList = []
-      this.orders.list.forEach((toShow) => {
-        if (toShow.status === statu) {
-          this.showList.push(toShow)
-        }
+        this.orders = {}
+        this.orders = response.data.list
       })
     },
+    // loadNav(statu) {
+    //   if (statu === '') {
+    //     this.loadData()
+    //   }
+    //   this.showList = []
+    //   this.orders.list.forEach((toShow) => {
+    //     if (toShow.status === statu) {
+    //       this.showList.push(toShow)
+    //     }
+    //   })
+    // },
     pageChangeHandler(page) {
       this.params.page = page - 1
-      this.loadData('')
+      this.loadData()
     },
     // toggleSelection(rows) {
     //   if (rows) {
