@@ -5,7 +5,7 @@
     <el-button round type="danger" icon="el-icon-delete" size="small">批量删除</el-button>
     <!-- /按钮 -->
     <!-- 表格 -->
-    <el-table :data="customer">
+    <el-table :data="customer" stripe>
       <el-table-column type="selection" />
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="realname" label="真实姓名" />

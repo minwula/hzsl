@@ -9,6 +9,7 @@
     <el-table
       border
       :data="address"
+      stripe
     >
       <el-table-column type="selection" />
       <el-table-column prop="id" label="用户编号" />

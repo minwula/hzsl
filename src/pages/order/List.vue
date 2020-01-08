@@ -16,7 +16,7 @@
       <el-tab-pane label="待确认" name="sixth">待确认</el-tab-pane>
       <el-tab-pane label="已完成" name="seventh">已完成</el-tab-pane>
     </el-tabs>
-    <el-table :data="orders">
+    <el-table :data="orders" stripe>
       <!-- <el-table-column type="selection" /> -->
 
       <el-table-column prop="id" label="编号" />

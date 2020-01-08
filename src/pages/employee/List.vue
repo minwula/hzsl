@@ -9,6 +9,7 @@
     <el-table
       border
       :data="employee"
+      stripe
     >
       <el-table-column type="selection" />
       <el-table-column prop="id" label="编号" />

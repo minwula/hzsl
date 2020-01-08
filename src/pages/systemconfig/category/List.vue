@@ -3,7 +3,7 @@
     <h2>栏目管理</h2>
     <el-button type="success" size="small" icon="el-icon-edit-outline" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" icon="el-icon-delete" round>批量删除</el-button>
-    <el-table :data="categorys">
+    <el-table :data="categorys" stripe>
       <el-table-column type="selection" />
       <el-table-column
         prop="id"

@@ -3,17 +3,27 @@
     <h2>产品管理</h2>
     <el-button type="success" size="small" round @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small" round @click="toDeleteAllHandler">批量删除</el-button>
-    <el-table :data="products" @selection-change="handleSelectionChange">
+    <el-table :data="products" stripe @selection-change="handleSelectionChange">
       <el-table-column type="selection" />
 
       <el-table-column prop="id" label="编号" />
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="price" label="价格" />
-      <el-table-column prop="photo" label="照片" />
+      <el-table-column label="照片">
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="products.photo"
+          fit="fill"
+        >
+          <div slot="error" class="image-slot">
+            <i class="el-icon-picture-outline" />
+          </div>
+        </el-image>
+      </el-table-column>
       <el-table-column prop="description" label="描述" />
       <el-table-column prop="categoryId" label="所属产品" />
 
-      <el-table-column v-slot="slot" label="操作">
+      <el-table-column v-slot="slot" fixed="right" label="操作">
         <template>
           <a href="" @click.prevent="toDeleteHandler(slot.row.id)"> <i class="el-icon-delete" /></a>
           <a href="" @click.prevent="toUpdateHandler(slot.row)"> <i class="el-icon-edit" /></a>
